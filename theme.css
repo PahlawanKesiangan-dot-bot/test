@@ -1,0 +1,50 @@
+/* =======================================
+   theme.css - PUSAT TEMA (HANYA DARK MODE)
+   ======================================= */
+:root {
+  --bg-deep: #040711;
+  --panel-bg: rgba(11, 17, 32, 0.92);
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --primary: #38bdf8;
+  --bh-orange: #fb923c;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --btn-bg: rgba(255, 255, 255, 0.06);
+  --btn-hover: rgba(255, 255, 255, 0.14);
+  --shadow-dock: 0 12px 30px rgba(0, 0, 0, 0.5);
+  --dropdown-bg: #0b1120;
+  --dropdown-text: #f8fafc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-deep); color: var(--text-main); overflow: hidden; }
+
+#space-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; cursor: grab; }
+#space-canvas:active { cursor: grabbing; }
+
+/* Logika Pemisahan UI PC dan Mobile */
+@media (max-width: 820px) { .ui-pc { display: none !important; } }
+@media (min-width: 821px) { .ui-mobile { display: none !important; } }
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { font-family: system-ui, sans-serif; background-color: var(--bg-deep); color: var(--text-main); overflow: hidden; }
+
+#space-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; cursor: grab; }
+#space-canvas:active { cursor: grabbing; }
+
+@media (max-width: 820px) { .ui-pc { display: none !important; } }
+@media (min-width: 821px) { .ui-mobile { display: none !important; } }
+
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body { font-family: system-ui, sans-serif; background-color: var(--bg-deep); color: var(--text-main); overflow: hidden; }
+
+#space-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; cursor: grab; }
+#space-canvas:active { cursor: grabbing; }
+
+/* Logika Pemisahan UI PC dan Mobile */
+@media (max-width: 820px) {
+  .ui-pc { display: none !important; }
+}
+@media (min-width: 821px) {
+  .ui-mobile { display: none !important; }
+}
