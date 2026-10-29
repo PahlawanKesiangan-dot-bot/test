@@ -534,12 +534,33 @@ function togglePlay() {
 if (btnPlay) btnPlay.addEventListener('click', togglePlay);
 if (btnPlayMobile) btnPlayMobile.addEventListener('click', togglePlay);
 
-const speedSlider = document.getElementById('speed-slider'), speedDisplay = document.getElementById('speed-display');
+// PERBAIKAN: Cari fungsi speedSlider lama Anda dan ganti menjadi ini:
 if (speedSlider) {
-  speedSlider.addEventListener('input', e => { speedFactor = parseFloat(e.target.value); if (speedDisplay) speedDisplay.innerText = speedFactor.toFixed(1) + 'x'; });
+  speedSlider.addEventListener('input', e => { 
+    speedFactor = parseFloat(e.target.value); 
+    if (speedDisplay) speedDisplay.innerText = speedFactor.toFixed(1) + 'x'; 
+    if (btnSpeedMobile) btnSpeedMobile.innerText = speedFactor + 'x'; // Sinkronisasi teks mobile
+  });
 }
 
 function bindToggle(id, cb) { const el = document.getElementById(id); if (el) el.addEventListener('click', () => cb(el.classList.toggle('active'))); }
 bindToggle('toggle-orbits', v => { showOrbits = v; });
 bindToggle('toggle-labels', v => { showLabels = v; });
 bindToggle('toggle-belts', v => { showBelts = v; });
+
+// --- LOGIKA TOMBOL LAJU KHUSUS MOBILE ---
+const btnSpeedMobile = document.getElementById('btn-speed-mobile');
+const mobileSpeeds = [0.5, 1.0, 2.0, 5.0];
+let currentSpeedIdx = 1;
+
+if (btnSpeedMobile) {
+  btnSpeedMobile.addEventListener('click', () => {
+    currentSpeedIdx = (currentSpeedIdx + 1) % mobileSpeeds.length;
+    speedFactor = mobileSpeeds[currentSpeedIdx];
+    btnSpeedMobile.innerText = speedFactor + 'x';
+    // Sinkronisasi dengan slider PC (jika ada)
+    if (speedSlider) speedSlider.value = speedFactor;
+    if (speedDisplay) speedDisplay.innerText = speedFactor.toFixed(1) + 'x';
+  });
+}
+

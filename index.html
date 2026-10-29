@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="id"> <!-- HAPUS data-theme="dark" -->
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Orrery Explorer</title>
-  
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="desktop.css" media="screen and (min-width: 821px)">
   <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 820px)">
 </head>
 <body>
-
   <canvas id="space-canvas"></canvas>
 
   <!-- ==============================================
@@ -28,29 +26,23 @@
           <p>Zoom-out terus ke luar untuk melihat Pusat Galaksi &amp; Black Hole</p>
         </div>
       </div>
-
       <div class="top-actions">
         <select id="planet-select" aria-label="Pilih Objek Kosmik">
           <option value="">-- Fokuskan Objek --</option>
           <optgroup label="Pusat Tata Surya"><option value="matahari">☀ Matahari</option></optgroup>
           <optgroup label="Planet Dalam">
-            <option value="merkurius">Merkurius</option>
-            <option value="venus">Venus</option>
-            <option value="bumi">Bumi &amp; Bulan</option>
-            <option value="mars">Mars</option>
+            <option value="merkurius">Merkurius</option><option value="venus">Venus</option>
+            <option value="bumi">Bumi &amp; Bulan</option><option value="mars">Mars</option>
           </optgroup>
           <optgroup label="Planet Luar">
-            <option value="yupiter">Yupiter</option>
-            <option value="saturnus">Saturnus</option>
-            <option value="uranus">Uranus</option>
-            <option value="neptunus">Neptunus</option>
+            <option value="yupiter">Yupiter</option><option value="saturnus">Saturnus</option>
+            <option value="uranus">Uranus</option><option value="neptunus">Neptunus</option>
             <option value="pluto">Pluto (Sabuk Kuiper)</option>
           </optgroup>
           <optgroup label="Skala Galaksi (Zoom Out Jauh)">
             <option value="blackhole">⚫ Sagittarius A* (Black Hole)</option>
           </optgroup>
         </select>
-        <!-- TOMBOL TEMA DIHAPUS DARI SINI -->
       </div>
     </header>
 
@@ -79,27 +71,6 @@
         </div>
       </div>
     </nav>
-
-    <aside id="info-panel" class="info-panel">
-      <button id="btn-close-panel" class="close-btn" title="Tutup Panel">&times;</button>
-      <div class="panel-header">
-        <span id="obj-type" class="badge">Bintang</span>
-        <h2 id="obj-name">Matahari</h2>
-        <p id="obj-nickname" class="nickname">Pusat Tata Surya</p>
-      </div>
-      <div class="panel-preview"><div id="obj-orb" class="celestial-orb"></div></div>
-      <div class="stats-grid">
-        <div class="stat-card"><span class="stat-label">Jarak Rata-rata</span><strong id="stat-dist">-</strong></div>
-        <div class="stat-card"><span class="stat-label">Periode Orbit</span><strong id="stat-period">-</strong></div>
-        <div class="stat-card"><span class="stat-label">Ukuran / Massa</span><strong id="stat-diameter">-</strong></div>
-        <div class="stat-card"><span class="stat-label">Satelit / Struktur</span><strong id="stat-moons">-</strong></div>
-      </div>
-      <div class="panel-body">
-        <h3>Karakteristik Ilmiah</h3><p id="obj-desc">-</p>
-        <h3>Fakta Sains</h3><ul id="obj-facts" class="facts-list"></ul>
-      </div>
-      <div class="panel-footer"><button id="btn-unfocus" class="action-btn">Lepas Fokus Kamera</button></div>
-    </aside>
   </div>
 
   <!-- ==============================================
@@ -109,28 +80,47 @@
     <header class="mobile-header">
       <select id="planet-select-mobile">
         <option value="">-- Fokus Objek --</option>
-        <option value="matahari">☀ Matahari</option>
-        <option value="merkurius">Merkurius</option>
-        <option value="venus">Venus</option>
-        <option value="bumi">Bumi</option>
-        <option value="mars">Mars</option>
-        <option value="yupiter">Yupiter</option>
-        <option value="saturnus">Saturnus</option>
-        <option value="uranus">Uranus</option>
-        <option value="neptunus">Neptunus</option>
-        <option value="pluto">Pluto</option>
+        <option value="matahari">☀ Matahari</option><option value="merkurius">Merkurius</option>
+        <option value="venus">Venus</option><option value="bumi">Bumi</option>
+        <option value="mars">Mars</option><option value="yupiter">Yupiter</option>
+        <option value="saturnus">Saturnus</option><option value="uranus">Uranus</option>
+        <option value="neptunus">Neptunus</option><option value="pluto">Pluto</option>
         <option value="blackhole">⚫ Black Hole</option>
       </select>
-      <!-- TOMBOL TEMA DIHAPUS DARI SINI -->
     </header>
 
     <div class="mobile-dock">
       <button id="btn-play-mobile">⏸</button>
+      <button id="btn-speed-mobile" class="text-btn">1x</button> <!-- TOMBOL LAJU BARU -->
       <button id="btn-zoom-in-mobile">➕</button>
       <button id="btn-zoom-out-mobile">➖</button>
       <button id="btn-galactic-mobile" title="Skala Galaksi">🌌</button>
     </div>
   </div>
+
+  <!-- ==============================================
+       🌍 PANEL INFO BERSAMA (Dipindah ke Luar agar berfungsi di HP & PC)
+       ============================================== -->
+  <aside id="info-panel" class="info-panel">
+    <button id="btn-close-panel" class="close-btn" title="Tutup Panel">&times;</button>
+    <div class="panel-header">
+      <span id="obj-type" class="badge">Bintang</span>
+      <h2 id="obj-name">Matahari</h2>
+      <p id="obj-nickname" class="nickname">Pusat Tata Surya</p>
+    </div>
+    <div class="panel-preview"><div id="obj-orb" class="celestial-orb"></div></div>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-label">Jarak Rata-rata</span><strong id="stat-dist">-</strong></div>
+      <div class="stat-card"><span class="stat-label">Periode Orbit</span><strong id="stat-period">-</strong></div>
+      <div class="stat-card"><span class="stat-label">Ukuran / Massa</span><strong id="stat-diameter">-</strong></div>
+      <div class="stat-card"><span class="stat-label">Satelit / Struktur</span><strong id="stat-moons">-</strong></div>
+    </div>
+    <div class="panel-body">
+      <h3>Karakteristik Ilmiah</h3><p id="obj-desc">-</p>
+      <h3>Fakta Sains</h3><ul id="obj-facts" class="facts-list"></ul>
+    </div>
+    <div class="panel-footer"><button id="btn-unfocus" class="action-btn">Lepas Fokus Kamera</button></div>
+  </aside>
 
   <script src="script.js"></script>
 </body>
