@@ -980,3 +980,80 @@ function bindToggle(id, cb) {
 bindToggle('toggle-orbits', v => { showOrbits = v; });
 bindToggle('toggle-labels', v => { showLabels = v; });
 bindToggle('toggle-belts', v => { showBelts = v; });
+
+// --- DUKUNGAN SENTUHAN (MOBILE & TABLET) ---
+let initialPinchDist = null;
+let lastPinchZoom = camera.targetZoom;
+
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    // 1 Jari: Geser (Pan)
+    camera.isDragging = true;
+    camera.dragMoved = false;
+    camera.dragStartX = e.touches[0].clientX;
+    camera.dragStartY = e.touches[0].clientY;
+  } else if (e.touches.length === 2) {
+    // 2 Jari: Pinch-to-Zoom
+    camera.isDragging = false; // Batalkan geser
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    initialPinchDist = Math.hypot(dx, dy);
+    lastPinchZoom = camera.targetZoom;
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault(); // Mencegah pull-to-refresh / scroll halaman di mobile
+
+  if (e.touches.length === 1 && camera.isDragging) {
+    const dx = (e.touches[0].clientX - camera.dragStartX) / camera.zoom;
+    const dy = (e.touches[0].clientY - camera.dragStartY) / camera.zoom;
+    
+    // Cek jika jari bergerak lebih dari batas toleransi (agar tap tidak dianggap drag)
+    if (Math.abs(e.touches[0].clientX - camera.dragStartX) > 5 || Math.abs(e.touches[0].clientY - camera.dragStartY) > 5) {
+      camera.dragMoved = true;
+    }
+    
+    camera.targetX += dx;
+    camera.targetY += dy;
+    camera.dragStartX = e.touches[0].clientX;
+    camera.dragStartY = e.touches[0].clientY;
+
+    if (focusedKey && camera.dragMoved) {
+      focusedKey = null;
+      document.getElementById('planet-select').value = "";
+    }
+
+  } else if (e.touches.length === 2 && initialPinchDist) {
+    // Proses Zoom (Pinch)
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const currentDist = Math.hypot(dx, dy);
+    
+    const pinchScale = currentDist / initialPinchDist;
+    const nextZoom = Math.max(0.04, Math.min(6.0, lastPinchZoom * pinchScale));
+    
+    // Transisi halus ke arah galaksi jika zoom out cukup jauh
+    if (pinchScale < 1 && nextZoom < 0.22 && !focusedKey) {
+      const blend = Math.min(1, (0.22 - nextZoom) / 0.14);
+      camera.targetX += (-1350 - camera.targetX) * (0.18 * blend);
+      camera.targetY += (300 - camera.targetY) * (0.18 * blend);
+    }
+    
+    camera.targetZoom = nextZoom;
+    document.getElementById('hint-pill').style.opacity = '0';
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchend', e => {
+  if (e.touches.length === 0) {
+    camera.isDragging = false;
+    initialPinchDist = null;
+  }
+
+  // Jika disentuh 1 jari dan tidak ada pergeseran berarti itu "Klik" (Tap)
+  if (e.changedTouches.length === 1 && !camera.dragMoved && initialPinchDist === null) {
+    const hit = getHitCelestial(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    if (hit) focusObject(hit);
+  }
+});
