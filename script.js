@@ -534,7 +534,10 @@ function togglePlay() {
 if (btnPlay) btnPlay.addEventListener('click', togglePlay);
 if (btnPlayMobile) btnPlayMobile.addEventListener('click', togglePlay);
 
-// PERBAIKAN: Cari fungsi speedSlider lama Anda dan ganti menjadi ini:
+// --- DEKLARASI SLIDER PC YANG HILANG ---
+const speedSlider = document.getElementById('speed-slider');
+const speedDisplay = document.getElementById('speed-display');
+
 if (speedSlider) {
   speedSlider.addEventListener('input', e => { 
     speedFactor = parseFloat(e.target.value); 
